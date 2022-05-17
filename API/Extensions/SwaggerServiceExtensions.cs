@@ -12,7 +12,7 @@ namespace API.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("", new OpenApiInfo
+                c.SwaggerDoc("", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                 Title = "API",
                 Version = "v1"
@@ -24,8 +24,7 @@ namespace API.Extensions
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");});
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             return app;
         }
         
