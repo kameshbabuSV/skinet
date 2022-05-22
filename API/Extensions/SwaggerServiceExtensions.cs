@@ -15,8 +15,26 @@ namespace API.Extensions
                 c.SwaggerDoc("", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                 Title = "API",
-                Version = "v1"
+                Version = "v3"
                 });
+
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Description = "JWT Auth Bearer Scheme",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id="Bearer"
+                    }
+                };
+                c.AddSecurityDefinition("Bearer",securityScheme);
+                var securityRequirement = new OpenApiSecurityRequirement{
+                    {securityScheme,new[]{"Bearer"}}};
+                c.AddSecurityRequirement(securityRequirement);
             });
             return services;
         }
@@ -24,7 +42,7 @@ namespace API.Extensions
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v3/swagger.json", "API v3"));
             return app;
         }
         
